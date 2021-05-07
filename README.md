@@ -4,8 +4,8 @@ This is a small project that aims to solve the needs of a scout group (312 - Cru
 
 This module of the project uses telegraf framework to allow families to consult some of the data we use in the group for management purposes in a more dynamic way.
  
-Telegraf's website: https://telegraf.js.org/
-Telegram's website: https://telegram.org/
+* Telegraf's website: https://telegraf.js.org/
+* Telegram's website: https://telegram.org/
  
  ## Current status
  
