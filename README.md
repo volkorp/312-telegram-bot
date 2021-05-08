@@ -9,7 +9,7 @@ This module of the project uses telegraf framework to allow families to consult 
  
  ## Current status
  
- Current version is 1.0.0 so it still has plain functionality just to get used to telegraf's framework and telegram's bot.
+ Current version is 0.0.0 so it still has plain functionality just to get used to telegraf's framework and telegram's bot.
  
  Bot is made using node and interacts with a MySQL database hosted by a docker.
  
