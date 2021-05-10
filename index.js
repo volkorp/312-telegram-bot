@@ -1,10 +1,9 @@
 const { TOKEN, DB_HOST, DB_USER, DB_PASSWORD, DB_SCHEMA, DB_QUERIES } = require('./config.json');
-const { SALUDOS, ERROR, RESPONSE, EXPLANATION, CONSULT_TRIGGER } = require('./assets/languaje.json');
+const { SALUDOS, ERROR, RESPONSE, EXPLANATION, TRIGGERS } = require('./assets/languaje.json');
 const { Telegraf } = require('telegraf');
 const mysql = require('mysql2');
 const bot = new Telegraf(TOKEN);
 const emoji = require('node-emoji').emoji;
-
 
 
 //////////////////////////////////////
@@ -27,21 +26,21 @@ const connection = mysql.createConnection({
 // START
 bot.command('start', ctx => {
     console.log(ctx.from)
-    bot.telegram.sendMessage(ctx.chat.id, `¡Hola ${ctx.from.first_name}! ${EXPLANATION.START_COMMAND_EXPLANATION} ${emoji.camping}`, {
-    })
+    bot.telegram.sendMessage(ctx.chat.id, `¡Hola ${ctx.from.first_name}! ${EXPLANATION.START_COMMAND_EXPLANATION} ${emoji.camping}`);
 });
 
 // ALTA
 bot.command('alta', ctx => {
-    console.log(ctx.from)
+    console.log(ctx.from);
     connection.connect(function (err) {
         if (err) throw err;
         console.log("Db connection success!");
 
         connection.promise().query(DB_QUERIES.GET_AUTHORIZED, ctx.from.id).then((result) => {
+            console.log(result);
             // Users exists | User waitting for authentication | User does NOT exists
-            if (result[0] !== null && result[0] !== undefined) {
-                if (result[0].authorized === 1)
+            if (result[0] !== null && result[0] !== undefined && result[0].length !== 0) {
+                if (result[0][0].authorized === 1)
                     bot.telegram.sendMessage(ctx.chat.id, `${ERROR.ALREADY_EXISTS_ERROR} ${emoji.smile}`);
                 else
                     bot.telegram.sendMessage(ctx.chat.id, `${ERROR.WAITTING_AUTH_ERROR} ${emoji.smiley}`);
@@ -65,19 +64,45 @@ bot.command('alta', ctx => {
     });
 });
 
-
-//////////////////////////////////////
-//             Chatbot              //
-//////////////////////////////////////
-
-bot.hears(['holi', 'hola'], (ctx, next) => {
+// HELP
+bot.command(TRIGGERS.HELP_TRIGGER, ctx => {
     console.log(ctx.from);
+    bot.telegram.sendMessage(ctx.chat.id, `${EXPLANATION.HELP_EXPLANATION}`);
+});
 
-    bot.telegram.sendMessage(ctx.chat.id, `${SALUDOS[Math.floor(Math.random() * SALUDOS.length)]} ${emoji.heart}`, {});
+// NEWS
+bot.command('novedades', ctx => {
+    console.log(ctx.from);
+    bot.telegram.sendMessage(ctx.chat.id, `${ERROR.IN_CONSTRUCTION_ERROR} ${emoji.sweat_smile}`);
+});
+
+// AUTHORIZATION
+bot.command('autorizacion', ctx => {
+    console.log(ctx.from);
+    bot.telegram.sendMessage(ctx.chat.id, `¿Qué autorización necesitas que te envíe? ${emoji.thinking_face} ${EXPLANATION.AUTHORIZATIONS_EXPLANATION}`, {
+        reply_markup: {
+            inline_keyboard: [
+                [{
+                    text: `Salidas ${emoji.camping}`,
+                    callback_data: 'campAuth'
+                },
+                {
+                    text: `Reuniones ${emoji.alien}`,
+                    callback_data: 'meetingsAuth'
+                },
+                {
+                    text: `Covid ${emoji.ambulance}`,
+                    callback_data: 'covidAuth'
+                }
+                ],
+
+            ]
+        }
+    });
 });
 
 // CONSULTAR
-bot.hears(CONSULT_TRIGGER, (ctx, next) => {
+bot.command(TRIGGERS.CONSULT_TRIGGER, (ctx, next) => {
     console.log(ctx.from);
     bot.telegram.sendMessage(ctx.chat.id, `¿Qué te gustaría consultar? ${emoji.thinking_face}` + "\n" + `${RESPONSE.CONSULT_RESPONSE}`, {
         reply_markup: {
@@ -97,10 +122,39 @@ bot.hears(CONSULT_TRIGGER, (ctx, next) => {
     });
 });
 
+//////////////////////////////////////
+//             Chatbot              //
+//////////////////////////////////////
+
+bot.hears(['holi', 'hola'], (ctx, next) => {
+    console.log(ctx.from);
+
+    bot.telegram.sendMessage(ctx.chat.id, `${SALUDOS[Math.floor(Math.random() * SALUDOS.length)]} ${emoji.heart}`);
+});
+
 
 //////////////////////////////////////
 //             Actions              //
 //////////////////////////////////////
+
+// campAuth
+bot.action('campAuth', ctx => {
+    console.log(ctx.from);
+    ctx.telegram.sendDocument(ctx.from.id, { source: './assets/media/campAuth.pdf' }, [{ disable_notification: true }]).catch((err) => { `| AUTHORIZATION BANK MODULE | - ${err}` })
+});
+
+// covidAuth
+bot.action('covidAuth', ctx => {
+    console.log(ctx.from);
+    ctx.telegram.sendMessage(ctx.from.id, `${RESPONSE.COVID_AUTHORIZATION_RESPONSE}`)
+    // ctx.telegram.sendDocument(ctx.from.id, { source: './assets/media/covidAuth.pdf' }, [{ disable_notification: true }]).catch((err) => { `| AUTHORIZATION BANK MODULE | - ${err}` })
+});
+
+// meetingsAuth
+bot.action('meetingsAuth', ctx => {
+    console.log(ctx.from);
+    ctx.telegram.sendDocument(ctx.from.id, { source: './assets/media/meetingsAuth.pdf' }, [{ disable_notification: true }]).catch((err) => { `| AUTHORIZATION BANK MODULE | - ${err}` })
+});
 
 // PIGGY BANK
 bot.action('piggyBank', ctx => {

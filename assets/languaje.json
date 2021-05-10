@@ -10,22 +10,34 @@
         "WAITTING_AUTH_ERROR": "Hemos recibido tu solicitud. Estamos gestionándola, ¡pronto podrás usar este servicio!",
         "ALREADY_EXISTS_ERROR": "¡Ya estás dad@ de alta en la aplicación!",
         "DUPLICATE_ENTRY": "Ya figura otra cuenta con esta misma sesión de telegram en nuestra base de datos... Ponte en contacto con secretaría para que podamos arreglarlo cuanto antes.",
-        "GENERIC_ERROR": "Ha sucedido algún error... ¡Lo sentimos! Inténtalo de nuevo más tarde o manda un correo a 312secretaria@gmail.com"
+        "GENERIC_ERROR": "Ha sucedido algún error... ¡Lo sentimos! Inténtalo de nuevo más tarde o manda un correo a 312secretaria@gmail.com",
+        "IN_CONSTRUCTION_ERROR": "Esta parte de la aplicación aún está en proceso... ¡No siempre es fácil lo de siempre list@s!"
     },
     "RESPONSE": {
         "CONSULT_RESPONSE": "\n\nTodos los datos se extraen en tiempo real de nuestra base de datos y solo los podrás consultar tú.\n\n¡La información que consultes será la misma que tengamos nosotros!",
         "PIGGY_BANK_RESPONSE": "Tienes acumulado en tu hucha",
         "PAYMENT_RESPONSE": "El método de pago que tienes seleccionado es",
-        "REGISTER_RESPONSE": "¡Hemos recibido tu solicitud con éxito! Pronto podrás usar este servicio."
+        "REGISTER_RESPONSE": "¡Hemos recibido tu solicitud con éxito! Pronto podrás usar este servicio.",
+        "COVID_AUTHORIZATION_RESPONSE":"¡Aquí tienes los formularios de covid!\n\n- Manada: https://docs.google.com/forms/d/1ujmMWM-AYhEFWMx5YFM385oUaDnjxL7Mt9NPs05X6dE/edit?usp=sharing \n\n- Sección scout: https://docs.google.com/forms/d/1xWW_7z3YTr6yxMTlNYh6jTQNl6wdEfnu5In26O9aw5w/edit?usp=sharing \n\n - Unidad: https://docs.google.com/forms/d/1OjycmiAQfOkuMuhQVfBlpK58ovRSOLNr-9pTkZ0u09c/edit?usp=sharing \n\n - Clan: https://docs.google.com/forms/d/10D4LeQpy-mCOjuEhcn60ejFqoBAp2Y45gFyx6OulKGg/edit?usp=sharing"
     },
     "EXPLANATION": {
-        "START_COMMAND_EXPLANATION":"\n\nEsperamos que esta aplicación te permita solucionar de manera rápida e intuitiva las inquietudes que tengas sobre tu membresía y la de l@s tuyos en el grupo scout 312 - Cruz del sur.\n\nEsta es una herramienta aún en desarrollo así que es posible que tenga algunos errores, te pedimos que tengas paciencia y nos cuentes los errores que encuentres para que podamos arreglarlos.\n\n¡Recuerda que todo lo que hacemos es voluntario y empleamos nuestro tiempo libre para que sea posible!\n\nLo primero que debes hacer es darte de /alta en la aplicación (puedes pulsar directamente) para que vinculemos tu cuenta de telegram con nuestra base de datos. Es algo que tenemos que hacer manulmente así que puede que tardemos un par de días en hacerlo.\n\nEn cualquier momento puedes usar el comando /ayuda para ver en qué cosas puedo ayudarte. \n\nUtilizando el comando /novedades podrás ver cuáles son las últimas novedades en el bot de Cruz del sur.\n\nEsperamos que sea de vuestro gusto y ayuda, ¡un abrazo!",
-        "USAGE_REQUEST_EXPLANATION": "Para que podamos identificar que tú eres tú y nadie consulta tus datos, vincularemos tus datos a esta sesión de telegram. \n\n¿Eso qué quiere decir?\n\nEsto quiere decir que solo podrás consultar tus datos desde esta cuenta, porque es la que vamos a vincular a nuestra base de datos.\n\nTendrás que esperar un tiempo a que alguien revise tu solicitud y se genere el vínculo.\n\n"
+        "START_COMMAND_EXPLANATION": "\n\nEsperamos que esta aplicación te permita solucionar de manera rápida e intuitiva las inquietudes que tengas sobre tu membresía y la de l@s tuyos en el grupo scout 312 - Cruz del sur.\n\nEsta es una herramienta aún en desarrollo así que es posible que tenga algunos errores, te pedimos que tengas paciencia y nos cuentes los errores que encuentres para que podamos arreglarlos.\n\n¡Recuerda que todo lo que hacemos es voluntario y empleamos nuestro tiempo libre para que sea posible!\n\nLo primero que debes hacer es darte de /alta en la aplicación (puedes pulsar directamente) para que vinculemos tu cuenta de telegram con nuestra base de datos. Es algo que tenemos que hacer manulmente así que puede que tardemos un par de días en hacerlo.\n\nEn cualquier momento puedes usar el comando /ayuda para ver en qué cosas puedo ayudarte. \n\nUtilizando el comando /novedades podrás ver cuáles son las últimas novedades en el bot de Cruz del sur.\n\nEsperamos que sea de vuestro gusto y ayuda, ¡un abrazo!",
+        "USAGE_REQUEST_EXPLANATION": "Para que podamos identificar que tú eres tú y nadie consulta tus datos, vincularemos tus datos a esta sesión de telegram. \n\n¿Eso qué quiere decir?\n\nEsto quiere decir que solo podrás consultar tus datos desde esta cuenta, porque es la que vamos a vincular a nuestra base de datos.\n\nTendrás que esperar un tiempo a que alguien revise tu solicitud y se genere el vínculo.\n\n",
+        "HELP_EXPLANATION": "Esta aplicación funciona de dos maneras: comandos o palabras clave.\n\nLos comandos serán cosas estríctamente de gestión, como por ejemplo: \n\n/alta \n/consultar \n/novedades \n/autorizacion \n/ayuda\n\n Podrás hacer click o escribir cualquiera de estos comandos para iniciar su función.",
+        "AUTHORIZATIONS_EXPLANATION":"\n\n- Salidas: Para cualquier cosa que implique salir de la base (rutas, acampadas, campamentos, etc.).\n\n- Reuniones: Si aún no estás dad@ de alta y quieres venir a probar. \n\n- Covid: Formato online, cada sección tiene el suyo propio. Deberá rellenarse cada 15 días mediante un formulario online."
     },
-    "CONSULT_TRIGGER": [
-        "consulta",
-        "Consulta",
-        "Consultar",
-        "consultar"
-    ]
+    "TRIGGERS": {
+        "CONSULT_TRIGGER": [
+            "consulta",
+            "Consulta",
+            "Consultar",
+            "consultar"
+        ],
+        "HELP_TRIGGER": [
+            "ayuda",
+            "Ayuda",
+            "help",
+            "Help"
+        ]
+    }
 }
