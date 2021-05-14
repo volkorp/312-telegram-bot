@@ -5,6 +5,10 @@ const mysql = require('mysql2');
 const bot = new Telegraf(TOKEN);
 const emoji = require('node-emoji').emoji;
 
+const AuthService = require('./modules/authService.js');
+
+const authService = new AuthService();
+
 
 //////////////////////////////////////
 //                DB                //
@@ -67,7 +71,7 @@ bot.command('alta', ctx => {
 // HELP
 bot.command(TRIGGERS.HELP_TRIGGER, ctx => {
     console.log(ctx.from);
-    bot.telegram.sendMessage(ctx.chat.id, `${EXPLANATION.HELP_EXPLANATION}`);
+    bot.telegram.sendMessage(ctx.chat.id, `${EXPLANATION.HELP_EXPLANATION} ${emoji.face_with_rolling_eyes}`);
 });
 
 // NEWS
@@ -104,20 +108,36 @@ bot.command('autorizacion', ctx => {
 // CONSULTAR
 bot.command(TRIGGERS.CONSULT_TRIGGER, (ctx, next) => {
     console.log(ctx.from);
-    bot.telegram.sendMessage(ctx.chat.id, `¿Qué te gustaría consultar? ${emoji.thinking_face}` + "\n" + `${RESPONSE.CONSULT_RESPONSE}`, {
-        reply_markup: {
-            inline_keyboard: [
-                [{
-                    text: `Dinero en mi hucha ${emoji.moneybag}`,
-                    callback_data: 'piggyBank'
-                },
-                {
-                    text: `Tipo de pago ${emoji.credit_card}`,
-                    callback_data: 'paymentType'
-                }
-                ],
 
-            ]
+    authService.isAuthed(ctx, bot, connection).then(authed => {
+        switch (authed) {
+            case 'EXIST':
+                bot.telegram.sendMessage(ctx.chat.id, `¿Qué te gustaría consultar? ${emoji.thinking_face}` + "\n" + `${RESPONSE.CONSULT_RESPONSE}`, {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [{
+                                text: `Dinero en mi hucha ${emoji.moneybag}`,
+                                callback_data: 'piggyBank'
+                            },
+                            {
+                                text: `Tipo de pago ${emoji.credit_card}`,
+                                callback_data: 'paymentType'
+                            }
+                            ],
+
+                        ]
+                    }
+                });
+                break;
+            case 'NOT_AUTH':
+                bot.telegram.sendMessage(ctx.chat.id, `${ERROR.NOT_AUTH_ERROR} ${emoji.smile}`);
+                break;
+            case 'NOT_EXISTS':
+                bot.telegram.sendMessage(ctx.chat.id, `${ERROR.WAITTING_AUTH_ERROR} ${emoji.smiley}`);
+                break;
+            default:
+                bot.telegram.sendMessage(ctx.chat.id, `${ERROR.GENERIC_ERROR}`);
+                break;
         }
     });
 });
